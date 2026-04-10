@@ -1,0 +1,38 @@
+                    GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+
+Marc's Social Loader
+Copyright (C) 2026 Marc Gronenberg
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+--------------------------------------------------------------------------
+
+The full text of the GNU General Public License version 3 is available at:
+https://www.gnu.org/licenses/gpl-3.0.txt
+
+This app bundles the following free software components:
+
+- yt-dlp (The Unlicense, https://github.com/yt-dlp/yt-dlp)
+- ffmpeg (GNU General Public License v3, https://ffmpeg.org/)
+- Sparkle (MIT License, https://sparkle-project.org)
+
+Because this app ships an ffmpeg build that includes GPL-licensed
+codecs (libx264, libx265, etc.), the combined binary distribution is
+subject to the GPL v3. The source code for Marc's Social Loader is
+available at the project's GitHub repository.

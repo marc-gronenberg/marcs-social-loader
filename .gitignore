@@ -1,0 +1,20 @@
+# SwiftPM build products
+.build/
+.swiftpm/
+Package.resolved
+
+# App bundle output
+dist/
+
+# Cached dependency binaries (downloaded by build.sh on first build)
+Resources/bin/
+Resources/.AppIcon-*-padded.png
+Resources/AppIcon.icns
+
+# macOS cruft
+.DS_Store
+*.swp
+
+# Xcode project files (not used — SwiftPM only)
+*.xcodeproj/
+*.xcworkspace/
