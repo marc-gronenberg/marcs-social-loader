@@ -30,6 +30,21 @@ Features:
                 type="application/octet-stream"
                 sparkle:edSignature="I0dgwO436b8e2teu/tbi8Q8CaZdRK7X2z0H79deYysTBHBNBn4TUzoPMYgMKGtGhkeqf1+PGtSPSB31G4wJhAw==" />
         </item>
+                <item>
+            <title>Version 1.0.1</title>
+            <description><![CDATA[Test-Release zur Verifikation des Sparkle Auto-Update-Mechanismus.]]></description>
+            <pubDate>Fri, 10 Apr 2026 17:22:38 +0000</pubDate>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure
+                url="https://github.com/marc-gronenberg/marcs-social-loader/releases/download/v1.0.1/Marcs-Social-Loader-1.0.1.zip"
+                sparkle:version="3"
+                sparkle:shortVersionString="1.0.1"
+                length="65836903"
+                type="application/octet-stream"
+                sparkle:edSignature="zTgW9OUe015+ofaT/FJcn1OPespWAwN3tnbdEt/eMSA/AEZcWPV8MvnouwQhUUTLQadNEnrW96og+D9JnrobAg==" />
+        </item>
         <!-- RELEASES -->
     </channel>
 </rss>
