@@ -45,6 +45,43 @@ Features:
                 type="application/octet-stream"
                 sparkle:edSignature="zTgW9OUe015+ofaT/FJcn1OPespWAwN3tnbdEt/eMSA/AEZcWPV8MvnouwQhUUTLQadNEnrW96og+D9JnrobAg==" />
         </item>
+                <item>
+            <title>Version 26.0</title>
+            <description><![CDATA[# Marc's Social Loader 26.0
+
+Erste öffentliche Version. Zuvor eher ein privates Wochenend-Tool — jetzt an dem Punkt wo ich es guten Gewissens weitergeben kann.
+
+## Was neu ist
+
+- **Playlist-Support.** Pastest du eine YouTube-Playlist, werden alle Videos als Gruppe zum Download hinzugefügt. Für die ganze Gruppe auf einmal kannst du Qualität wählen (inklusive MP3 für Musik-Playlists) oder sie mit einem Klick komplett entfernen. Gruppen lassen sich wie Ordner im Finder auf- und zuklappen. Bei `watch?v=…&list=…`-URLs fragt die App nach, ob du nur das einzelne Video oder die ganze Playlist willst.
+
+- **Deutlich schneller.** yt-dlp startet jetzt als Onedir-Build in ~200 ms statt ~7 Sekunden — das ist ein 35× Speedup und der größte spürbare Unterschied. Beim App-Fokus wird die Zwischenablage erkannt und yt-dlp vorgezogen, sodass der Klick auf Paste fast sofort das Video zeigt.
+
+- **Automatische yt-dlp-Updates.** Einmal pro Tag im Hintergrund. YouTube und andere Plattformen ändern ständig ihre APIs, die gebundelte Version wäre sonst nach ein paar Wochen stumm kaputt. Die Updates landen in Application Support und werden atomic umgeschaltet — scheitert der Download, läuft die gebundelte Version einfach weiter.
+
+- **Bessere Fehlermeldungen.** Statt rohem yt-dlp-Output erklärt die App jetzt klar, was los ist: „Video ist privat", „Region-Sperre", „Altersbeschränkung — Login nötig", „YouTube Bot-Check — in ein paar Minuten erneut versuchen", usw.
+
+- **Auto-Retry** bei transienten Fehlern und YouTube-Bot-Check (wechselt auf den `tv_embedded`-Player-Client beim zweiten Versuch, was den Bot-Check in den meisten Fällen umgeht).
+
+- **Visuelle Feinheiten.** Der Paste-Button zeigt die Host-Vorschau der kopierten URL („URL einfügen — youtube.com"). Der Progress-Bar läuft jetzt smooth statt ruckelig. Alle individuellen Item-Funktionen (einzelnes Entfernen, einzelne Qualität, Doppelklick zum Umbenennen) funktionieren auch innerhalb von Playlist-Gruppen.
+
+## Credit
+
+yt-dlp und ffmpeg machen die eigentliche Arbeit. Diese App ist nur eine SwiftUI-Hülle drumherum, damit man kein Terminal öffnen muss. Sparkle sorgt für die Updates.
+
+Freie Software unter GPL v3.]]></description>
+            <pubDate>Fri, 10 Apr 2026 22:17:16 +0000</pubDate>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>26.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure
+                url="https://github.com/marc-gronenberg/marcs-social-loader/releases/download/v26.0/Marcs-Social-Loader-26.0.zip"
+                sparkle:version="4"
+                sparkle:shortVersionString="26.0"
+                length="93096307"
+                type="application/octet-stream"
+                sparkle:edSignature="Rkq8ev4e6dcymfXgOfmjnlF+dFRxuQ+NTEGLqK3mnAgipk1wON/4RC3+GKTsCjnXgkO9SWqG0ExJRf70XQhcAw==" />
+        </item>
         <!-- RELEASES -->
     </channel>
 </rss>
