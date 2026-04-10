@@ -33,7 +33,7 @@
 	     (generated via `generate_keys`). Feed is served via GitHub Pages
 	     from the /docs folder of the public repo. -->
 	<key>SUFeedURL</key>
-	<string>https://Magic-Mark.github.io/marcs-social-loader/appcast.xml</string>
+	<string>https://marc-gronenberg.github.io/marcs-social-loader/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>HjNY9UyHDlkFtWbvIZuAAdR+bCJKmsy+xVZi6MzWv08=</string>
 	<key>SUEnableAutomaticChecks</key>

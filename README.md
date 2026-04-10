@@ -37,7 +37,7 @@ more warnings.
 ## Build from source
 
 ```bash
-git clone https://github.com/Magic-Mark/marcs-social-loader.git
+git clone https://github.com/marc-gronenberg/marcs-social-loader.git
 cd <repo>
 ./build.sh
 open "dist/Marc's Social Loader.app"
