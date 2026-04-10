@@ -72,6 +72,7 @@ need() {
 
 need gh          "Install with: brew install gh && gh auth login"
 need sign_update "Install Sparkle tools: https://github.com/sparkle-project/Sparkle/releases (put sign_update on your PATH)"
+need create-dmg  "Install with: brew install create-dmg"
 need ditto
 need /usr/libexec/PlistBuddy
 
@@ -135,6 +136,31 @@ echo "→ Packaging ${ZIP_NAME}…"
 ZIP_SIZE=$(stat -f%z "$ZIP_PATH")
 echo "  size: $(( ZIP_SIZE / 1024 / 1024 )) MB"
 
+# ----- DMG installer --------------------------------------------------------
+# Build a polished drag-to-Applications DMG for first-time installs.
+# Sparkle keeps using the .zip for in-place updates (faster, no mount).
+
+DMG_NAME="Marcs-Social-Loader-${VERSION}.dmg"
+DMG_PATH="dist/${DMG_NAME}"
+echo "→ Building ${DMG_NAME}…"
+(
+  cd dist
+  rm -f "$DMG_NAME"
+  create-dmg \
+    --volname "Marc's Social Loader" \
+    --window-pos 200 120 \
+    --window-size 600 400 \
+    --icon-size 128 \
+    --icon "Marc's Social Loader.app" 175 190 \
+    --hide-extension "Marc's Social Loader.app" \
+    --app-drop-link 425 190 \
+    --no-internet-enable \
+    "$DMG_NAME" \
+    "Marc's Social Loader.app" >/dev/null
+)
+DMG_SIZE=$(stat -f%z "$DMG_PATH")
+echo "  size: $(( DMG_SIZE / 1024 / 1024 )) MB"
+
 # ----- Sign with Sparkle ----------------------------------------------------
 
 echo "→ Signing zip with Sparkle EdDSA key…"
@@ -165,10 +191,10 @@ git push origin "$TAG"
 
 echo "→ Creating GitHub release $TAG…"
 if [ -n "$NOTES" ]; then
-  printf '%s' "$NOTES" | gh release create "$TAG" "$ZIP_PATH" \
+  printf '%s' "$NOTES" | gh release create "$TAG" "$ZIP_PATH" "$DMG_PATH" \
     --title "$VERSION" --notes-file -
 else
-  gh release create "$TAG" "$ZIP_PATH" \
+  gh release create "$TAG" "$ZIP_PATH" "$DMG_PATH" \
     --title "$VERSION" --generate-notes
 fi
 
