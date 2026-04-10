@@ -75,7 +75,7 @@ final class DockProgressView: NSView {
             width: fillWidth,
             height: trackRect.height
         )
-        NSColor.controlAccentColor.setFill()
+        BrandColor.red.setFill()
         NSBezierPath(
             roundedRect: fillRect,
             xRadius: corner,

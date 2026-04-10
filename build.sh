@@ -123,14 +123,41 @@ fi
 BIN_CACHE="Resources/bin"
 mkdir -p "$BIN_CACHE"
 
-# yt-dlp: official universal2 macOS binary from GitHub releases.
-YTDLP_CACHE="$BIN_CACHE/yt-dlp"
-if [ ! -f "$YTDLP_CACHE" ]; then
-  echo "→ Downloading yt-dlp standalone binary…"
+# yt-dlp: universal2 macOS onedir build from GitHub releases.
+#
+# CRITICAL: we deliberately pull the .zip (onedir) instead of the
+# single-file yt-dlp_macos. PyInstaller's onefile bundler extracts its
+# embedded Python interpreter + all native libraries into a fresh
+# /var/folders/.../_MEIxxxx directory on EVERY invocation, adding
+# ~7 seconds of cold-start per run. The onedir build keeps Python and
+# its libraries in a sibling _internal/ directory next to the launcher,
+# which drops warm-start to ~200 ms (a 35× speedup).
+#
+# Disk cost: onedir is ~145 MB extracted (vs. 37 MB for onefile), so
+# the .app bundle grows to roughly 230 MB. That's worth it — the old
+# cold-start was the single biggest UX papercut in the app.
+YTDLP_CACHE_DIR="$BIN_CACHE/yt-dlp"
+
+# Migrate from the old layout: a single file at Resources/bin/yt-dlp.
+# If that's what's cached, nuke it so we re-download the onedir.
+if [ -f "$YTDLP_CACHE_DIR" ] && [ ! -d "$YTDLP_CACHE_DIR" ]; then
+  echo "→ Migrating cached yt-dlp from single-file to onedir layout…"
+  rm -f "$YTDLP_CACHE_DIR"
+fi
+
+if [ ! -d "$YTDLP_CACHE_DIR" ] || [ ! -x "$YTDLP_CACHE_DIR/yt-dlp_macos" ]; then
+  echo "→ Downloading yt-dlp onedir build (~64 MB zip)…"
+  TMP_ZIP=$(mktemp -d)
   curl -fL --progress-bar \
-    "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos" \
-    -o "$YTDLP_CACHE"
-  chmod +x "$YTDLP_CACHE"
+    "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos.zip" \
+    -o "$TMP_ZIP/yt-dlp_macos.zip"
+  rm -rf "$YTDLP_CACHE_DIR"
+  mkdir -p "$YTDLP_CACHE_DIR"
+  # The zip contains `yt-dlp_macos` + `_internal/` at the top level,
+  # so extract directly into the cache dir.
+  unzip -q "$TMP_ZIP/yt-dlp_macos.zip" -d "$YTDLP_CACHE_DIR"
+  chmod +x "$YTDLP_CACHE_DIR/yt-dlp_macos"
+  rm -rf "$TMP_ZIP"
 fi
 
 # ffmpeg: static arm64 build from evermeet.cx.
@@ -184,11 +211,18 @@ if [ -f "$PADDED_DARK" ]; then
   cp "$PADDED_DARK" "$APP_DIR/Contents/Resources/AppIcon-Dark.png"
 fi
 
-# Copy the bundled yt-dlp / ffmpeg binaries into the app's Resources/bin/.
+# Copy the bundled yt-dlp onedir and ffmpeg into the app's Resources/bin/.
+#
+# Final layout in the bundle:
+#   Contents/Resources/bin/
+#     ffmpeg                      (single static binary, ~80 MB)
+#     yt-dlp/
+#       yt-dlp_macos              (onedir launcher, ~12 MB)
+#       _internal/                (Python runtime + libs, ~133 MB)
 mkdir -p "$APP_DIR/Contents/Resources/bin"
-cp "$YTDLP_CACHE"  "$APP_DIR/Contents/Resources/bin/yt-dlp"
-cp "$FFMPEG_CACHE" "$APP_DIR/Contents/Resources/bin/ffmpeg"
-chmod +x "$APP_DIR/Contents/Resources/bin/yt-dlp"
+cp -R "$YTDLP_CACHE_DIR" "$APP_DIR/Contents/Resources/bin/yt-dlp"
+cp "$FFMPEG_CACHE"        "$APP_DIR/Contents/Resources/bin/ffmpeg"
+chmod +x "$APP_DIR/Contents/Resources/bin/yt-dlp/yt-dlp_macos"
 chmod +x "$APP_DIR/Contents/Resources/bin/ffmpeg"
 
 # Strip extended attributes from the whole bundle. iCloud Drive (where

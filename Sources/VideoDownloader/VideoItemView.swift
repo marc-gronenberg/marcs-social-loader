@@ -13,6 +13,8 @@ struct VideoItemView: View {
     @FocusState private var titleFieldFocused: Bool
     /// NSEvent monitor that detects clicks outside the text field while editing.
     @State private var clickOutsideMonitor: Any?
+    /// Hover state for the remove (X) button.
+    @State private var isXHovered = false
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -31,12 +33,21 @@ struct VideoItemView: View {
                     Button(action: onRemove) {
                         Image(systemName: "xmark")
                             .font(.system(size: 11, weight: .bold))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(isXHovered ? Color.primary : Color.secondary)
                             .frame(width: 20, height: 20)
                             .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
                     .help(isBusy ? l10n.str(.tooltipCancelDownload) : l10n.str(.tooltipRemove))
+                    .onHover { hovering in
+                        isXHovered = hovering
+                        if hovering {
+                            NSCursor.pointingHand.push()
+                        } else {
+                            NSCursor.pop()
+                        }
+                    }
+                    .animation(.easeOut(duration: 0.12), value: isXHovered)
                 }
 
                 HStack(spacing: 10) {
@@ -70,8 +81,13 @@ struct VideoItemView: View {
                 }
 
                 if showsProgressBar {
-                    ProgressView(value: item.progress)
+                    // Bind to the smoothed value, not the raw target.
+                    // The 30 fps smoother in DownloadManager interpolates
+                    // displayedProgress toward `progress` so the bar moves
+                    // evenly even when yt-dlp emits updates in bursts.
+                    ProgressView(value: item.displayedProgress)
                         .progressViewStyle(.linear)
+                        .tint(BrandColor.redSwiftUI)
                         .padding(.top, 2)
                 }
             }

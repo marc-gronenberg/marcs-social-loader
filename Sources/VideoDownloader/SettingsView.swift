@@ -65,23 +65,9 @@ struct SettingsView: View {
             }
 
             Spacer(minLength: 0)
-
-            // Version footer — reads live from the running bundle.
-            HStack {
-                Spacer()
-                Text(versionString)
-                    .font(.system(size: 10))
-                    .foregroundStyle(.tertiary)
-            }
         }
         .padding(24)
         .frame(width: 420, height: 280)
         .background(Color(nsColor: .windowBackgroundColor))
-    }
-
-    private var versionString: String {
-        let short = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
-        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
-        return "Version \(short) (\(build))"
     }
 }

@@ -200,6 +200,36 @@ func runApp() {
     // item has a live target.
     _ = UpdateController.shared
 
+    // Kick off the yt-dlp background updater. Runs off the main thread,
+    // throttled to once per 24 h, and swallows every error — a failed
+    // update never delays startup or breaks anything, because
+    // ToolLocator always falls back to the bundled binary.
+    Task.detached(priority: .utility) {
+        await ToolUpdater.updateIfNeeded()
+    }
+
+    // Pre-warm yt-dlp: run `--version` once in the background to force
+    // macOS to read the launcher binary and every dylib inside
+    // `_internal/` into its page cache. The first real user paste then
+    // skips the ~500 ms–1 s of cold disk I/O and runs at warm speed
+    // (~200 ms) instead. Safe to run unconditionally — the call is
+    // throwaway, the output is discarded, and failures are ignored.
+    Task.detached(priority: .utility) {
+        let bin = await MainActor.run { ToolLocator.ytDlp() }
+        guard !bin.isEmpty else { return }
+        let proc = Process()
+        proc.executableURL = URL(fileURLWithPath: bin)
+        proc.arguments = ["--version"]
+        proc.standardOutput = Pipe()
+        proc.standardError = Pipe()
+        do {
+            try proc.run()
+            proc.waitUntilExit()
+        } catch {
+            // best-effort warmup, ignore failures
+        }
+    }
+
     app.run()
 }
 
