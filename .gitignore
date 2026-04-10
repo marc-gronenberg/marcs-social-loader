@@ -15,6 +15,9 @@ Resources/AppIcon.icns
 .DS_Store
 *.swp
 
+# Claude tooling
+.claude/
+
 # Xcode project files (not used — SwiftPM only)
 *.xcodeproj/
 *.xcworkspace/
