@@ -1,0 +1,35 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Marc's Social Loader</title>
+        <link>https://marc-gronenberg.github.io/marcs-social-loader/appcast.xml</link>
+        <description>Updates for Marc's Social Loader</description>
+        <language>en</language>
+                <item>
+            <title>Version 1.0.0</title>
+            <description><![CDATA[Erste öffentliche Version von Marc's Social Loader.
+
+Features:
+- Download von YouTube, Instagram, TikTok, X und weiteren Plattformen
+- H.264/AAC-Priorität für Adobe Media Encoder Kompatibilität
+- Parallele Downloads mit Live-Progress im Dock
+- 9 Sprachen mit automatischer System-Erkennung
+- Light/Dark/System Erscheinungsbild
+- Native macOS Notifications
+- Self-contained: yt-dlp und ffmpeg sind im Bundle
+- Automatische Updates über Sparkle]]></description>
+            <pubDate>Fri, 10 Apr 2026 16:18:55 +0000</pubDate>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure
+                url="https://github.com/marc-gronenberg/marcs-social-loader/releases/download/v1.0.0/Marcs-Social-Loader-1.0.0.zip"
+                sparkle:version="2"
+                sparkle:shortVersionString="1.0.0"
+                length="65836383"
+                type="application/octet-stream"
+                sparkle:edSignature="I0dgwO436b8e2teu/tbi8Q8CaZdRK7X2z0H79deYysTBHBNBn4TUzoPMYgMKGtGhkeqf1+PGtSPSB31G4wJhAw==" />
+        </item>
+        <!-- RELEASES -->
+    </channel>
+</rss>
